@@ -6,4 +6,9 @@ mark 2
 unmark 2
 todo join sports club
 list
+todo
+deadline submit report
+event party /from
+blah
+mark
 bye

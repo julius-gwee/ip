@@ -28,7 +28,7 @@ public class Bestie {
 
                 case "list":
                     System.out.println("____________________________________________________________");
-                    System.out.println(" Here is your to-do list bestie!");
+                    System.out.println(" Here is your task list bestie!");
                     for (int i = 0; i < taskCount; i++) {
                         System.out.println(" " + (i + 1) + "." + tasks[i]);
                     }
@@ -51,14 +51,41 @@ public class Bestie {
                             + "____________________________________________________________\n");
                     break;
 
+                case "todo":
+                    Task todo = new Todo(parts[1]);
+                    tasks[taskCount++] = todo;
+                    printAdd(todo, taskCount);
+                    break;
+
+                case "deadline":
+                    String[] deadlineParts = parts[1].split("/by", 2);
+                    Task deadline = new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim());
+                    tasks[taskCount++] = deadline;
+                    printAdd(deadline, taskCount);
+                    break;
+
+                case "event":
+                    String[] eventParts = parts[1].split("/from", 2);
+                    String descr = eventParts[0].trim();
+                    String[] fromTo = eventParts[1].split("/to", 2);
+                    Task event = new Event(descr, fromTo[0].trim(), fromTo[1].trim());
+                    tasks[taskCount++] = event;
+                    printAdd(event, taskCount);
+                    break;
+
                 default:
-                    tasks[taskCount] = new Task(input);
-                    taskCount++;
                     System.out.println("____________________________________________________________\n"
-                            + " ive added " + input + " to your to-do list :)\n"
+                            + "im sorry bestie but i have no clue what you are sayin \n"
                             + "____________________________________________________________\n");
                     break;
             }
         }
+    }
+
+    private static void printAdd(Task task, int count) {
+        System.out.println("____________________________________________________________\n"
+                + " aightt ive added this task: \n" + "  " + task + "\n"
+                + " now you have " + count + " tasks in your list!!" + "\n"
+                + "____________________________________________________________\n");
     }
 }

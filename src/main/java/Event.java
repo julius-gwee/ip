@@ -13,4 +13,10 @@ public class Event extends Task {
         return "[E]" + super.toString()
                 + " (from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String toDataString() {
+        String done = (status == Status.DONE) ? "1" : "0";
+        return type.getShortCode() + " | " + done + " | " + description + " | " + from + " | " + to;
+    }
 }

@@ -14,11 +14,17 @@ public class Task {
     }
 
     public void markAsUndone() {
-        this.status = Status.DONE;
+        this.status = Status.NOT_DONE; // bugfix
     }
 
     public String getStatusIcon() {
         return status == Status.DONE ? "X" : " "; // mark done task with X
+    }
+
+    /** Pipe-delimited line used by Storage: T|1|description */
+    public String toDataString() {
+        String done = (status == Status.DONE) ? "1" : "0";
+        return type.getShortCode() + " | " + done + " | " + description;
     }
 
     @Override
@@ -26,4 +32,3 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 }
-

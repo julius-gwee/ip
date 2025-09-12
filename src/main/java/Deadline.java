@@ -10,4 +10,10 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    @Override
+    public String toDataString() {
+        String done = (status == Status.DONE) ? "1" : "0";
+        return type.getShortCode() + " | " + done + " | " + description + " | " + by;
+    }
 }

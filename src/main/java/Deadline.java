@@ -1,19 +1,51 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
-    protected String by;
+    // typed fields if parsable
+    private final LocalDate byDate;
+    private final LocalDateTime byDateTime;
+    // raw text fallback for unparsed inputs and backward compatibility
+    private final String byRaw;
 
     public Deadline(String description, String by) {
         super(description, TaskType.DEADLINE);
-        this.by = by;
+        this.byRaw = by.trim();
+        LocalDateTime dt = DateTimeUtil.parseDateTime(this.byRaw);
+        if (dt != null) {
+            this.byDateTime = dt;
+            this.byDate = null;
+        } else {
+            this.byDate = DateTimeUtil.parseDate(this.byRaw);
+            this.byDateTime = null;
+        }
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        String nice;
+        if (byDateTime != null) {
+            nice = DateTimeUtil.pretty(byDateTime);
+        } else if (byDate != null) {
+            nice = DateTimeUtil.pretty(byDate);
+        } else {
+            nice = byRaw;
+        }
+        // Keep your existing "[D]" style plus base "[ ] desc"
+        return "[D]" + super.toString() + " (by: " + nice + ")";
     }
 
     @Override
     public String toDataString() {
         String done = (status == Status.DONE) ? "1" : "0";
-        return type.getShortCode() + " | " + done + " | " + description + " | " + by;
+        String stored;
+        if (byDateTime != null) {
+            stored = DateTimeUtil.canonical(byDateTime); // yyyy-MM-dd HHmm
+        } else if (byDate != null) {
+            stored = DateTimeUtil.canonical(byDate);     // yyyy-MM-dd
+        } else {
+            stored = byRaw; // keep old data as-is
+        }
+        return type.getShortCode() + " | " + done + " | " + description + " | " + stored;
     }
 }

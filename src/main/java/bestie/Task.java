@@ -1,3 +1,5 @@
+package bestie;
+
 public class Task {
     protected String description;
     protected Status status;

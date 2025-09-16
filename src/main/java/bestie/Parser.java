@@ -1,3 +1,5 @@
+package bestie;
+
 public class Parser {
     public boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws BestieException {
         String[] parts = input.split(" ", 2);

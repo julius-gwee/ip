@@ -1,3 +1,5 @@
+package bestie;
+
 public class Bestie {
     public static void main(String[] args) {
         Ui ui = new Ui();

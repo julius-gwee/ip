@@ -1,3 +1,5 @@
+package bestie;
+
 public abstract class Command {
     /** Override if this command should exit the app */
     public boolean isExit() {

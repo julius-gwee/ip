@@ -80,32 +80,41 @@ public class Storage {
         String doneFlag = parts[1].trim();
 
         boolean isDone;
-        if ("1".equals(doneFlag)) isDone = true;
-        else if ("0".equals(doneFlag)) isDone = false;
-        else throw new BestieException("Invalid done flag (must be 0/1): " + doneFlag);
+        if ("1".equals(doneFlag)) {
+            isDone = true;
+        } else if ("0".equals(doneFlag)) {
+            isDone = false;
+        } else {
+            throw new BestieException("Invalid done flag (must be 0/1): " + doneFlag);
+        }
 
         Task t;
         switch (type) {
-            case "T": {
-                if (parts.length < 3) throw new BestieException("Todo missing description");
-                t = new Todo(parts[2]);
-                break;
+        case "T":
+            if (parts.length < 3) {
+                throw new BestieException("Todo missing description");
             }
-            case "D": {
-                if (parts.length < 4) throw new BestieException("Deadline missing /by");
-                t = new Deadline(parts[2], parts[3]);
-                break;
+            t = new Todo(parts[2]);
+            break;
+        case "D":
+            if (parts.length < 4) {
+                throw new BestieException("Deadline missing /by");
             }
-            case "E": {
-                if (parts.length < 5) throw new BestieException("Event missing /from or /to");
-                t = new Event(parts[2], parts[3], parts[4]);
-                break;
+            t = new Deadline(parts[2], parts[3]);
+            break;
+        case "E":
+            if (parts.length < 5) {
+                throw new BestieException("Event missing /from or /to");
             }
-            default:
-                throw new BestieException("Unknown task type: " + type);
+            t = new Event(parts[2], parts[3], parts[4]);
+            break;
+        default:
+            throw new BestieException("Unknown task type: " + type);
         }
 
-        if (isDone) t.markAsDone();
+        if (isDone) {
+            t.markAsDone();
+        }
         return t;
     }
 }

@@ -36,7 +36,11 @@ public final class DateTimeUtil {
     public static LocalDate parseDate(String s) {
         String x = s.trim();
         for (DateTimeFormatter f : DATE_PATTERNS) {
-            try { return LocalDate.parse(x, f); } catch (DateTimeParseException ignored) {}
+            try {
+                return LocalDateTime.parse(x, f);
+            } catch (DateTimeParseException ignored) {
+                // Try the next pattern.
+            }
         }
         return null;
     }
@@ -44,7 +48,11 @@ public final class DateTimeUtil {
     public static LocalDateTime parseDateTime(String s) {
         String x = s.trim();
         for (DateTimeFormatter f : DATETIME_PATTERNS) {
-            try { return LocalDateTime.parse(x, f); } catch (DateTimeParseException ignored) {}
+            try {
+                return LocalDateTime.parse(x, f);
+            } catch (DateTimeParseException ignored) {
+                // Try the next pattern.
+            }
         }
         return null;
     }

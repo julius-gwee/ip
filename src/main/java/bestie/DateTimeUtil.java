@@ -48,7 +48,7 @@ public final class DateTimeUtil {
         String x = s.trim();
         for (DateTimeFormatter f : DATE_PATTERNS) {
             try {
-                return LocalDateTime.parse(x, f);
+                return LocalDate.parse(x, f);
             } catch (DateTimeParseException ignored) {
                 // Try the next pattern.
             }

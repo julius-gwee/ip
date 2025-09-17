@@ -1,6 +1,7 @@
 package bestie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Wraps the mutable list of tasks and exposes high-level operations for the

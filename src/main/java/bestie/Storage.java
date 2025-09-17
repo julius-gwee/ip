@@ -30,6 +30,7 @@ public class Storage {
      * @param filePath location of the data file
      */
     public Storage(Path filePath) {
+        assert filePath != null : "Storage file path must not be null";
         this.filePath = filePath;
     }
 
@@ -71,6 +72,7 @@ public class Storage {
      * @throws IOException if writing fails
      */
     public void save(List<Task> tasks) throws IOException {
+        assert tasks != null : "Tasks to save must not be null";
         Path parent = filePath.getParent();
         if (parent != null) {
             Files.createDirectories(parent);
@@ -101,6 +103,7 @@ public class Storage {
      * </ul>
      */
     private Task parseLine(String line) throws BestieException {
+        assert line != null : "Line to parse must not be null";
         String[] parts = line.split("\\s*\\|\\s*");
         if (parts.length < 3) {
             throw new BestieException("Too few fields: " + line);

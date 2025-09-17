@@ -14,6 +14,7 @@ public class TaskList {
      * Creates an empty task list.
      */
     public TaskList() {
+        assert tasks != null : "Backing task list must not be null";
         this.tasks = new ArrayList<>();
     }
 
@@ -32,6 +33,7 @@ public class TaskList {
      * @param task task to add
      */
     public void add(Task task) {
+        assert tasks != null : "Backing task list must not be null";
         tasks.add(task);
     }
 
@@ -42,6 +44,7 @@ public class TaskList {
      * @return the removed task
      */
     public Task remove(int index) {
+        assert index >= 0 && index < tasks.size() : "Removal index must be within bounds";
         return tasks.remove(index);
     }
 
@@ -52,6 +55,7 @@ public class TaskList {
      * @return the task stored at that index
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Access index must be within bounds";
         return tasks.get(index);
     }
 
@@ -61,6 +65,7 @@ public class TaskList {
      * @param index position of the task to update
      */
     public void mark(int index) {
+        assert index >= 0 && index < tasks.size() : "Mark index must be within bounds";
         tasks.get(index).markAsDone();
     }
 
@@ -70,6 +75,7 @@ public class TaskList {
      * @param index position of the task to update
      */
     public void unmark(int index) {
+        assert index >= 0 && index < tasks.size() : "Unmark index must be within bounds";
         tasks.get(index).markAsUndone();
     }
 
@@ -98,6 +104,7 @@ public class TaskList {
      * @return ordered list of matching tasks
      */
     public List<Task> find(String keyword) {
+        assert keyword != null : "Search keyword must not be null";
         ArrayList<Task> matches = new ArrayList<>();
         String needle = keyword.toLowerCase();
         for (Task task : tasks) {

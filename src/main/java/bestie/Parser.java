@@ -16,7 +16,12 @@ public class Parser {
      * @throws BestieException if the command is invalid or missing arguments
      */
     public boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws BestieException {
+        assert input != null : "Input command must not be null";
+        assert tasks != null : "Task list must not be null";
+        assert ui != null : "UI must not be null";
+        assert storage != null : "Storage must not be null";
         String[] parts = input.split(" ", 2);
+        assert parts.length > 0 : "Splitting the command should yield at least one token";
         String command = parts[0];
         switch (command) {
             case "bye":
@@ -36,6 +41,7 @@ public class Parser {
                     throw new BestieException("Please specify which task to mark!");
                 }
                 int markIndex = Integer.parseInt(parts[1]) - 1;
+                assert markIndex >= 0 && markIndex < tasks.size() : "Mark index must be within the task list";
                 Task markTask = tasks.get(markIndex);
                 markTask.markAsDone();
                 saveQuiet(storage, tasks);
@@ -46,6 +52,7 @@ public class Parser {
                     throw new BestieException("Please specify which task to unmark!");
                 }
                 int unmarkIndex = Integer.parseInt(parts[1]) - 1;
+                assert unmarkIndex >= 0 && unmarkIndex < tasks.size() : "Unmark index must be within the task list";
                 Task unmarkTask = tasks.get(unmarkIndex);
                 unmarkTask.markAsUndone();
                 saveQuiet(storage, tasks);
@@ -56,6 +63,7 @@ public class Parser {
                     throw new BestieException("Please specify which task to delete!");
                 }
                 int delIndex = Integer.parseInt(parts[1]) - 1;
+                assert delIndex >= 0 && delIndex < tasks.size() : "Delete index must be within the task list";
                 Task removed = tasks.remove(delIndex);
                 saveQuiet(storage, tasks);
                 ui.showDelete(removed, tasks.size());
@@ -74,6 +82,7 @@ public class Parser {
                     throw new BestieException("Deadline command must have a /by date/time!");
                 }
                 String[] deadlineParts = parts[1].split("/by", 2);
+                assert deadlineParts.length == 2 : "Deadline command must contain a description and a /by clause";
                 if (deadlineParts[0].trim().isEmpty() || deadlineParts[1].trim().isEmpty()) {
                     throw new BestieException("Deadline description and date/time cannot be empty!");
                 }
@@ -87,8 +96,10 @@ public class Parser {
                     throw new BestieException("Event must have /from and /to times!");
                 }
                 String[] eventParts = parts[1].split("/from", 2);
+                assert eventParts.length == 2 : "Event command must contain a description and a /from clause";
                 String descr = eventParts[0].trim();
                 String[] fromTo = eventParts[1].split("/to", 2);
+                assert fromTo.length == 2 : "Event command must contain both /from and /to clauses";
                 if (descr.isEmpty() || fromTo[0].trim().isEmpty() || fromTo[1].trim().isEmpty()) {
                     throw new BestieException("Event description and times cannot be empty!");
                 }

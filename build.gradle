@@ -46,7 +46,7 @@ test {
 }
 
 application {
-    mainClass.set("bestie.Bestie")
+    mainClass.set("Launcher")
 }
 
 shadowJar {

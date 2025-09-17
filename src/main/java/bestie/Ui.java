@@ -26,18 +26,22 @@ public class Ui {
      *
      * @param message content to display
      */
-    protected void write(String message) {
-        System.out.println(message);
+    protected void write(String... messages) {
+        for (String message : messages) {
+            System.out.println(message);
+        }
     }
 
     /**
      * Prints the welcome banner that greets the user at start-up.
      */
     public void showWelcome() {
-        write("____________________________________________________________\n"
-                + " heyyy I'm Bestie\n"
-                + " whatsup?\n"
-                + "____________________________________________________________");
+        write(
+                "____________________________________________________________",
+                " heyyy I'm Bestie",
+                " whatsup?",
+                "____________________________________________________________"
+        );
     }
 
     /**
@@ -97,7 +101,7 @@ public class Ui {
      * @param task the task that was marked
      */
     public void showMark(Task task) {
-        write(" YAYYY ive marked: \n  " + task);
+        write(" YAYYY ive marked:", "  " + task);
     }
 
     /**
@@ -106,7 +110,7 @@ public class Ui {
      * @param task the task that was unmarked
      */
     public void showUnmark(Task task) {
-        write(" no worries! ive unmarked: \n  " + task);
+        write(" no worries! ive unmarked:", "  " + task);
     }
 
     /**
@@ -116,8 +120,11 @@ public class Ui {
      * @param size remaining number of tasks
      */
     public void showDelete(Task task, int size) {
-        write(" Noted. I've removed this task:\n  " + task
-                + "\n Now you have " + size + " tasks in the list.");
+        write(
+                " Noted. I've removed this task:",
+                "  " + task,
+                " Now you have " + size + " tasks in the list."
+        );
     }
 
     /**
@@ -127,8 +134,11 @@ public class Ui {
      * @param size total number of tasks after insertion
      */
     public void showAdd(Task task, int size) {
-        write(" aightt ive added this task: \n  " + task
-                + "\n now you have " + size + " tasks in your list!!");
+        write(
+                " aightt ive added this task:",
+                "  " + task,
+                " now you have " + size + " tasks in your list!!"
+        );
     }
 
     /**

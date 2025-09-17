@@ -8,8 +8,10 @@ class GuiUi extends Ui {
     private final StringBuilder buffer = new StringBuilder();
 
     @Override
-    protected void write(String message) {
-        buffer.append(message).append(System.lineSeparator());
+    protected void write(String... messages) {
+        for (String message : messages) {
+            buffer.append(message).append(System.lineSeparator());
+        }
     }
 
     /**

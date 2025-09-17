@@ -9,19 +9,37 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Persists the user's tasks to disk and reconstructs them on start-up.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a storage component backed by {@code data/bestie.txt} in the
+     * working directory.
+     */
     public Storage() {
         // ./data/bestie.txt (relative + OS-independent)
         this(Paths.get("data", "bestie.txt"));
     }
 
+    /**
+     * Creates a storage component that reads and writes to the specified path.
+     *
+     * @param filePath location of the data file
+     */
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
-    /** Load tasks from disk. If file is missing, return empty list. */
+    /**
+     * Loads tasks from disk.
+     *
+     * @return a mutable list of tasks from the save file, or an empty list if
+     *         the file does not exist
+     * @throws IOException if the file cannot be read
+     */
     public ArrayList<Task> load() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -46,7 +64,12 @@ public class Storage {
         return tasks;
     }
 
-    /** Save all tasks to disk (overwrites). Creates the ./data folder if needed. */
+    /**
+     * Saves the supplied tasks to disk, overwriting any existing data file.
+     *
+     * @param tasks tasks to persist
+     * @throws IOException if writing fails
+     */
     public void save(List<Task> tasks) throws IOException {
         Path parent = filePath.getParent();
         if (parent != null) {
@@ -66,10 +89,16 @@ public class Storage {
         );
     }
 
-    /** Parse a line like:
-     *  T | 1 | read book
-     *  D | 0 | return book | Sunday
-     *  E | 0 | project meeting | Mon 2pm | 4pm
+    /**
+     * Parses a single line from the data file.
+     *
+     * <p>The syntax matches the format produced by {@link Task#toDataString()}.
+     * Example lines:</p>
+     * <ul>
+     *     <li>{@code T | 1 | read book}</li>
+     *     <li>{@code D | 0 | return book | Sunday}</li>
+     *     <li>{@code E | 0 | project meeting | Mon 2pm | 4pm}</li>
+     * </ul>
      */
     private Task parseLine(String line) throws BestieException {
         String[] parts = line.split("\\s*\\|\\s*");

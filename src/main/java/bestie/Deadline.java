@@ -3,6 +3,10 @@ package bestie;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Task with a deadline, optionally storing parsed temporal information for
+ * nicer display and consistent persistence.
+ */
 public class Deadline extends Task {
     // typed fields if parsable
     private final LocalDate byDate;
@@ -10,6 +14,12 @@ public class Deadline extends Task {
     // raw text fallback for unparsed inputs and backward compatibility
     private final String byRaw;
 
+    /**
+     * Creates a deadline task with a description and due date/time.
+     *
+     * @param description description of the work to complete
+     * @param by          textual representation of when the task is due
+     */
     public Deadline(String description, String by) {
         super(description, TaskType.DEADLINE);
         this.byRaw = by.trim();
@@ -23,6 +33,9 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Returns a user-friendly string with the parsed deadline information.
+     */
     @Override
     public String toString() {
         String nice;
@@ -37,6 +50,9 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + nice + ")";
     }
 
+    /**
+     * Serializes the task with normalized temporal fields when available.
+     */
     @Override
     public String toDataString() {
         String done = (status == Status.DONE) ? "1" : "0";

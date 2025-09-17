@@ -2,13 +2,23 @@ package bestie;
 
 import java.util.Scanner;
 
+/**
+ * Handles all interactions with the user, from reading commands to
+ * presenting friendly status messages.
+ */
 public class Ui {
     private final Scanner sc;
 
+    /**
+     * Creates a UI that reads input from {@link System#in}.
+     */
     public Ui() {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Prints the welcome banner that greets the user at start-up.
+     */
     public void showWelcome() {
         System.out.println("____________________________________________________________\n"
                 + " heyyy I'm Bestie\n"
@@ -16,26 +26,50 @@ public class Ui {
                 + "____________________________________________________________");
     }
 
+    /**
+     * Reads the next line of input from the user.
+     *
+     * @return raw command text without validation
+     */
     public String readCommand() {
         return sc.nextLine();
     }
 
+    /**
+     * Prints the divider line used to separate output blocks.
+     */
     public void showLine() {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Alerts the user that persistent data could not be loaded.
+     */
     public void showLoadingError() {
         System.out.println("Bestie couldn't load tasks. Starting fresh.");
     }
 
+    /**
+     * Displays an error message while preserving Bestie's friendly tone.
+     *
+     * @param message explanation of the problem encountered
+     */
     public void showError(String message) {
         System.out.println(" " + message);
     }
 
+    /**
+     * Says goodbye to the user before the application exits.
+     */
     public void showBye() {
         System.out.println(" Bye bestie~ Keep slayin and prayin!");
     }
 
+    /**
+     * Prints every task in the list with a 1-based index.
+     *
+     * @param tasks collection of tasks to display
+     */
     public void showList(TaskList tasks) {
         System.out.println(" Here is your task list bestie!");
         for (int i = 0; i < tasks.size(); i++) {
@@ -43,19 +77,41 @@ public class Ui {
         }
     }
 
+    /**
+     * Announces that the specified task has been marked as complete.
+     *
+     * @param task the task that was marked
+     */
     public void showMark(Task task) {
         System.out.println(" YAYYY ive marked: \n  " + task);
     }
 
+    /**
+     * Announces that the specified task has been unmarked.
+     *
+     * @param task the task that was unmarked
+     */
     public void showUnmark(Task task) {
         System.out.println(" no worries! ive unmarked: \n  " + task);
     }
 
+    /**
+     * Reports that a task has been deleted and shows the remaining count.
+     *
+     * @param task the task that was removed
+     * @param size remaining number of tasks
+     */
     public void showDelete(Task task, int size) {
         System.out.println(" Noted. I've removed this task:\n  " + task
                 + "\n Now you have " + size + " tasks in the list.");
     }
 
+    /**
+     * Confirms a new task was added and reports the updated total.
+     *
+     * @param task the task that was just added
+     * @param size total number of tasks after insertion
+     */
     public void showAdd(Task task, int size) {
         System.out.println(" aightt ive added this task: \n  " + task
                 + "\n now you have " + size + " tasks in your list!!");

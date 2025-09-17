@@ -1,6 +1,19 @@
 package bestie;
 
+/**
+ * Entry point of Bestie.
+ *
+ * <p>The class wires together the user interface, persistent storage, and
+ * in-memory task list before handing control over to the {@link Parser} for the
+ * command loop.</p>
+ */
+
 public class Bestie {
+    /**
+     * Bootstraps and runs the chatbot.
+     *
+     * @param args command-line arguments supplied by the user; ignored by Bestie
+     */
     public static void main(String[] args) {
         Ui ui = new Ui();
         Storage storage = new Storage();

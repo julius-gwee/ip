@@ -14,7 +14,6 @@ public class TaskList {
      * Creates an empty task list.
      */
     public TaskList() {
-        assert tasks != null : "Backing task list must not be null";
         this.tasks = new ArrayList<>();
     }
 

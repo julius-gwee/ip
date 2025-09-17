@@ -43,13 +43,21 @@ public class Event extends Task {
     public String toString() {
         String fromNice, toNice;
 
-        if (fromDateTime != null) fromNice = DateTimeUtil.pretty(fromDateTime);
-        else if (fromDate != null) fromNice = DateTimeUtil.pretty(fromDate);
-        else fromNice = fromRaw;
+        if (fromDateTime != null) {
+            fromNice = DateTimeUtil.pretty(fromDateTime);
+        } else if (fromDate != null) {
+            fromNice = DateTimeUtil.pretty(fromDate);
+        } else {
+            fromNice = fromRaw;
+        }
 
-        if (toDateTime != null) toNice = DateTimeUtil.pretty(toDateTime);
-        else if (toDate != null) toNice = DateTimeUtil.pretty(toDate);
-        else toNice = toRaw;
+        if (toDateTime != null) {
+            toNice = DateTimeUtil.pretty(toDateTime);
+        } else if (toDate != null) {
+            toNice = DateTimeUtil.pretty(toDate);
+        } else {
+            toNice = toRaw;
+        }
 
         return "[E]" + super.toString() + " (from: " + fromNice + " to: " + toNice + ")";
     }
@@ -59,13 +67,21 @@ public class Event extends Task {
         String done = (status == Status.DONE) ? "1" : "0";
         String fromStored, toStored;
 
-        if (fromDateTime != null) fromStored = DateTimeUtil.canonical(fromDateTime);
-        else if (fromDate != null) fromStored = DateTimeUtil.canonical(fromDate);
-        else fromStored = fromRaw;
+        if (fromDateTime != null) {
+            fromStored = DateTimeUtil.canonical(fromDateTime);
+        } else if (fromDate != null) {
+            fromStored = DateTimeUtil.canonical(fromDate);
+        } else {
+            fromStored = fromRaw;
+        }
 
-        if (toDateTime != null) toStored = DateTimeUtil.canonical(toDateTime);
-        else if (toDate != null) toStored = DateTimeUtil.canonical(toDate);
-        else toStored = toRaw;
+        if (toDateTime != null) {
+            toStored = DateTimeUtil.canonical(toDateTime);
+        } else if (toDate != null) {
+            toStored = DateTimeUtil.canonical(toDate);
+        } else {
+            toStored = toRaw;
+        }
 
         return type.getShortCode() + " | " + done + " | " + description + " | " + fromStored + " | " + toStored;
     }

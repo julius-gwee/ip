@@ -1,4 +1,5 @@
 import bestie.Bestie;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -32,6 +33,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Bestie instance */
     public void setBestie(Bestie d) {
         bestie = d;
+        dialogContainer.getChildren().add(
+                DialogBox.getBestieDialog(bestie.getGreeting(), bestieImage)
+        );
     }
 
     /**
@@ -47,6 +51,12 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getBestieDialog(response, bestieImage)
         );
         userInput.clear();
+
+        if (bestie.isExit()) {
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+            Platform.exit();
+        }
     }
 }
 

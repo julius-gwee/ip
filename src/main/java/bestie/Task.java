@@ -15,6 +15,8 @@ public class Task {
      * @param type        type discriminator used for formatting and storage
      */
     public Task(String description, TaskType type) {
+        assert description != null : "Task description must not be null";
+        assert type != null : "Task type must not be null";
         this.description = description;
         this.status = Status.NOT_DONE;
         this.type = type;

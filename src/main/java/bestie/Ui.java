@@ -60,4 +60,20 @@ public class Ui {
         System.out.println(" aightt ive added this task: \n  " + task
                 + "\n now you have " + size + " tasks in your list!!");
     }
+
+    /**
+     * Displays the search results returned by the find command.
+     *
+     * @param matches ordered list of tasks containing the keyword
+     */
+    public void showFindResults(List<Task> matches) {
+        if (matches.isEmpty()) {
+            System.out.println(" hmmm I couldn't find any matching tasks bestie!");
+            return;
+        }
+        System.out.println(" Here are the matching tasks in your list:");
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + matches.get(i));
+        }
+    }
 }

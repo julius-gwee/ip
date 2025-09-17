@@ -11,6 +11,12 @@ public class Parser {
             case "list":
                 ui.showList(tasks);
                 return false;
+        case "find":
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                throw new BestieException("Please tell me what to find bestie!");
+            }
+            ui.showFindResults(tasks.find(parts[1].trim()));
+            return false;
             case "mark":
                 if (parts.length < 2) {
                     throw new BestieException("Please specify which task to mark!");

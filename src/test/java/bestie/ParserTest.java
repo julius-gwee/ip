@@ -40,7 +40,7 @@ class ParserTest {
         assertEquals(1, tasks.size());
         Task task = tasks.get(0);
         assertTrue(task instanceof Todo);
-        assertEquals("finish writing tests", task.description);
+        assertEquals("finish writing tests", task.getDescription());
         assertEquals(" ", task.getStatusIcon());
 
         List<String> lines = Files.readAllLines(tempDir.resolve("tasks.txt"), StandardCharsets.UTF_8);
@@ -56,5 +56,38 @@ class ParserTest {
         assertTrue(ex.getMessage().contains("cannot be empty"));
         assertEquals(0, tasks.size(), "No task should be added when parsing fails");
         assertTrue(Files.notExists(tempDir.resolve("tasks.txt")));
+    }
+
+    @Test
+    void parse_findCommand_returnsMatchingTasksWithoutSaving() throws Exception {
+        TaskList tasks = new TaskList();
+        Task readBook = new Todo("read book");
+        Task returnBook = new Deadline("return book", "2023-11-01 1800");
+        Task groceries = new Event("buy groceries", "2023-11-02 1000", "2023-11-02 1200");
+        tasks.add(readBook);
+        tasks.add(returnBook);
+        tasks.add(groceries);
+
+        RecordingUi recordingUi = new RecordingUi();
+
+        boolean shouldExit = parser.parse("find book", tasks, recordingUi, storage);
+
+        assertFalse(shouldExit, "find should not terminate the app");
+        assertEquals(List.of(readBook, returnBook), recordingUi.getMatches());
+        assertTrue(Files.notExists(tempDir.resolve("tasks.txt")),
+                "find should not persist tasks when nothing changes");
+    }
+
+    private static class RecordingUi extends Ui {
+        private List<Task> matches;
+
+        @Override
+        public void showFindResults(List<Task> matches) {
+            this.matches = matches;
+        }
+
+        List<Task> getMatches() {
+            return matches;
+        }
     }
 }

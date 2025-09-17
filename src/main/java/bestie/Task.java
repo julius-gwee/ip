@@ -23,6 +23,15 @@ public class Task {
         return status == Status.DONE ? "X" : " "; // mark done task with X
     }
 
+    /**
+     * Returns the human-readable description of the task.
+     *
+     * @return description entered by the user
+     */
+    public String getDescription() {
+        return description;
+    }
+
     /** Pipe-delimited line used by Storage: T|1|description */
     public String toDataString() {
         String done = (status == Status.DONE) ? "1" : "0";

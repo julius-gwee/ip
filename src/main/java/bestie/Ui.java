@@ -18,10 +18,23 @@ public class Ui {
     }
 
     /**
+     * Writes the given message to the output stream.
+     *
+     * <p>Subclasses can override this to redirect how messages are surfaced
+     * (e.g. storing them for the GUI) while keeping the formatting logic in
+     * this class.</p>
+     *
+     * @param message content to display
+     */
+    protected void write(String message) {
+        System.out.println(message);
+    }
+
+    /**
      * Prints the welcome banner that greets the user at start-up.
      */
     public void showWelcome() {
-        System.out.println("____________________________________________________________\n"
+        write("____________________________________________________________\n"
                 + " heyyy I'm Bestie\n"
                 + " whatsup?\n"
                 + "____________________________________________________________");
@@ -40,14 +53,14 @@ public class Ui {
      * Prints the divider line used to separate output blocks.
      */
     public void showLine() {
-        System.out.println("____________________________________________________________");
+        write("____________________________________________________________");
     }
 
     /**
      * Alerts the user that persistent data could not be loaded.
      */
     public void showLoadingError() {
-        System.out.println("Bestie couldn't load tasks. Starting fresh.");
+        write("Bestie couldn't load tasks. Starting fresh.");
     }
 
     /**
@@ -56,14 +69,14 @@ public class Ui {
      * @param message explanation of the problem encountered
      */
     public void showError(String message) {
-        System.out.println(" " + message);
+        write(" " + message);
     }
 
     /**
      * Says goodbye to the user before the application exits.
      */
     public void showBye() {
-        System.out.println(" Bye bestie~ Keep slayin and prayin!");
+        write(" Bye bestie~ Keep slayin and prayin!");
     }
 
     /**
@@ -72,9 +85,9 @@ public class Ui {
      * @param tasks collection of tasks to display
      */
     public void showList(TaskList tasks) {
-        System.out.println(" Here is your task list bestie!");
+        write(" Here is your task list bestie!");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i));
+            write(" " + (i + 1) + "." + tasks.get(i));
         }
     }
 
@@ -84,7 +97,7 @@ public class Ui {
      * @param task the task that was marked
      */
     public void showMark(Task task) {
-        System.out.println(" YAYYY ive marked: \n  " + task);
+        write(" YAYYY ive marked: \n  " + task);
     }
 
     /**
@@ -93,7 +106,7 @@ public class Ui {
      * @param task the task that was unmarked
      */
     public void showUnmark(Task task) {
-        System.out.println(" no worries! ive unmarked: \n  " + task);
+        write(" no worries! ive unmarked: \n  " + task);
     }
 
     /**
@@ -103,7 +116,7 @@ public class Ui {
      * @param size remaining number of tasks
      */
     public void showDelete(Task task, int size) {
-        System.out.println(" Noted. I've removed this task:\n  " + task
+        write(" Noted. I've removed this task:\n  " + task
                 + "\n Now you have " + size + " tasks in the list.");
     }
 
@@ -114,7 +127,7 @@ public class Ui {
      * @param size total number of tasks after insertion
      */
     public void showAdd(Task task, int size) {
-        System.out.println(" aightt ive added this task: \n  " + task
+        write(" aightt ive added this task: \n  " + task
                 + "\n now you have " + size + " tasks in your list!!");
     }
 
@@ -125,12 +138,12 @@ public class Ui {
      */
     public void showFindResults(List<Task> matches) {
         if (matches.isEmpty()) {
-            System.out.println(" hmmm I couldn't find any matching tasks bestie!");
+            write(" hmmm I couldn't find any matching tasks bestie!");
             return;
         }
-        System.out.println(" Here are the matching tasks in your list:");
+        write(" Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + matches.get(i));
+            write(" " + (i + 1) + "." + matches.get(i));
         }
     }
 }

@@ -2,41 +2,90 @@ package bestie;
 
 import java.util.ArrayList;
 
+/**
+ * Wraps the mutable list of tasks and exposes high-level operations for the
+ * rest of the application.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
+    /**
+     * Creates an empty task list.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Creates a task list that reuses the provided backing list.
+     *
+     * @param tasks existing tasks loaded from storage
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Adds a task to the end of the list.
+     *
+     * @param task task to add
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Removes the task at the specified 0-based index.
+     *
+     * @param index position of the task to remove
+     * @return the removed task
+     */
     public Task remove(int index) {
         return tasks.remove(index);
     }
 
+    /**
+     * Retrieves the task at the given 0-based index.
+     *
+     * @param index position of the task
+     * @return the task stored at that index
+     */
     public Task get(int index) {
         return tasks.get(index);
     }
 
+    /**
+     * Marks the task at the provided index as done.
+     *
+     * @param index position of the task to update
+     */
     public void mark(int index) {
         tasks.get(index).markAsDone();
     }
 
+    /**
+     * Marks the task at the provided index as not done.
+     *
+     * @param index position of the task to update
+     */
     public void unmark(int index) {
         tasks.get(index).markAsUndone();
     }
 
+    /**
+     * Returns the number of tasks currently tracked.
+     *
+     * @return current task count
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Exposes the backing list, primarily for persistence.
+     *
+     * @return mutable backing list of tasks
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }

@@ -3,6 +3,9 @@ package bestie;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Task that spans a time range, optionally storing parsed temporal data.
+ */
 public class Event extends Task {
     // typed (if parsable)
     private final LocalDate fromDate;
@@ -14,6 +17,13 @@ public class Event extends Task {
     private final String fromRaw;
     private final String toRaw;
 
+    /**
+     * Creates an event with start and end temporal information.
+     *
+     * @param description high-level description of the event
+     * @param from        textual representation of when the event starts
+     * @param to          textual representation of when the event ends
+     */
     public Event(String description, String from, String to) {
         super(description, TaskType.EVENT);
         this.fromRaw = from.trim();
@@ -39,6 +49,9 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Returns a user-friendly string describing the event timeframe.
+     */
     @Override
     public String toString() {
         String fromNice, toNice;
@@ -54,6 +67,9 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + fromNice + " to: " + toNice + ")";
     }
 
+/**
+ * Serializes the event into the pipe-delimited storage representation.
+ */
     @Override
     public String toDataString() {
         String done = (status == Status.DONE) ? "1" : "0";

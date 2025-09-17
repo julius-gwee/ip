@@ -1,6 +1,20 @@
 package bestie;
 
+/**
+ * Interprets user commands and applies the requested changes to the task list.
+ */
 public class Parser {
+    /**
+     * Parses the raw user input and executes the corresponding command.
+     *
+     * @param input    command text from the user
+     * @param tasks    list of tasks to mutate
+     * @param ui       UI used to show feedback to the user
+     * @param storage  persistent store used to save task updates
+     * @return {@code true} if the command exits the application, {@code false}
+     *         otherwise
+     * @throws BestieException if the command is invalid or missing arguments
+     */
     public boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws BestieException {
         String[] parts = input.split(" ", 2);
         String command = parts[0];
@@ -82,6 +96,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Persists tasks to disk without surfacing errors to the user.
+     *
+     * @param storage persistence component
+     * @param tasks   tasks to store
+     */
     private void saveQuiet(Storage storage, TaskList tasks) {
         try {
             storage.save(tasks.getTasks());

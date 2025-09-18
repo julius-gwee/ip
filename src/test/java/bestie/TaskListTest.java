@@ -34,4 +34,15 @@ class TaskListTest {
         assertEquals(matches, upperMatches);
         assertEquals(List.of(writeEssay), matches);
     }
+
+    @Test
+    void find_matchesTagsIgnoringHash() {
+        TaskList taskList = new TaskList();
+        Task picnic = new Todo("family picnic");
+        picnic.addTags(List.of("#Fun", "outdoors"));
+        taskList.add(picnic);
+
+        assertEquals(List.of(picnic), taskList.find("#fun"));
+        assertEquals(List.of(picnic), taskList.find("OUTDOORS"));
+    }
 }

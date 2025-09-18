@@ -105,9 +105,8 @@ public class TaskList {
     public List<Task> find(String keyword) {
         assert keyword != null : "Search keyword must not be null";
         ArrayList<Task> matches = new ArrayList<>();
-        String needle = keyword.toLowerCase();
         for (Task task : tasks) {
-            if (task.getDescription().toLowerCase().contains(needle)) {
+            if (task.matchesKeyword(keyword)) {
                 matches.add(task);
             }
         }

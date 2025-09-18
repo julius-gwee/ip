@@ -2,6 +2,7 @@ package bestie;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Handles all interactions with the user, from reading commands to
@@ -138,6 +139,27 @@ public class Ui {
                 " aightt ive added this task:",
                 "  " + task,
                 " now you have " + size + " tasks in your list!!"
+        );
+    }
+
+    /**
+     * Lets the user know that tags have been added to a task.
+     *
+     * @param task      the task that was tagged
+     * @param addedTags tags newly added to the task (without the leading '#')
+     */
+    public void showTag(Task task, List<String> addedTags) {
+        if (addedTags == null || addedTags.isEmpty()) {
+            write(" looks like those tags were already there bestie!", "  " + task);
+            return;
+        }
+        String formatted = addedTags.stream()
+                .map(tag -> "#" + tag)
+                .collect(Collectors.joining(" "));
+        write(
+                " yasss ive tagged it with:",
+                "  " + formatted,
+                "  " + task
         );
     }
 

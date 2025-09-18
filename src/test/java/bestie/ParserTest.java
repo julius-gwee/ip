@@ -78,6 +78,21 @@ class ParserTest {
                 "find should not persist tasks when nothing changes");
     }
 
+    @Test
+    void parse_tagCommand_addsTagsAndPersists() throws Exception {
+        TaskList tasks = new TaskList();
+        Task todo = new Todo("read book");
+        tasks.add(todo);
+
+        boolean shouldExit = parser.parse("tag 1 fun #Chill", tasks, ui, storage);
+
+        assertFalse(shouldExit, "tag command should not exit the app");
+        assertEquals(List.of("fun", "chill"), todo.getTags());
+
+        List<String> lines = Files.readAllLines(tempDir.resolve("tasks.txt"), StandardCharsets.UTF_8);
+        assertEquals(List.of("T | 0 | read book | fun,chill"), lines);
+    }
+
     private static class RecordingUi extends Ui {
         private List<Task> matches;
 

@@ -121,24 +121,28 @@ public class Storage {
         }
 
         Task t;
+        int requiredParts;
         switch (type) {
         case "T":
             if (parts.length < 3) {
                 throw new BestieException("Todo missing description");
             }
             t = new Todo(parts[2]);
+            requiredParts = 3;
             break;
         case "D":
             if (parts.length < 4) {
                 throw new BestieException("Deadline missing /by");
             }
             t = new Deadline(parts[2], parts[3]);
+            requiredParts = 4;
             break;
         case "E":
             if (parts.length < 5) {
                 throw new BestieException("Event missing /from or /to");
             }
             t = new Event(parts[2], parts[3], parts[4]);
+            requiredParts = 5;
             break;
         default:
             throw new BestieException("Unknown task type: " + type);
@@ -147,6 +151,23 @@ public class Storage {
         if (isDone) {
             t.markAsDone();
         }
+
+        if (parts.length > requiredParts) {
+            applyTags(t, parts[requiredParts]);
+        }
         return t;
+    }
+
+    private void applyTags(Task task, String serializedTags) {
+        if (serializedTags == null || serializedTags.isBlank()) {
+            return;
+        }
+        ArrayList<String> rawTags = new ArrayList<>();
+        for (String token : serializedTags.split(",")) {
+            if (!token.isBlank()) {
+                rawTags.add(token);
+            }
+        }
+        task.addTags(rawTags);
     }
 }

@@ -20,7 +20,7 @@ public class Deadline extends Task {
      * @param description description of the work to complete
      * @param by          textual representation of when the task is due
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws BestieException {
         super(description, TaskType.DEADLINE);
         this.byRaw = by.trim();
         LocalDateTime dt = DateTimeUtil.parseDateTime(this.byRaw);
@@ -30,6 +30,10 @@ public class Deadline extends Task {
         } else {
             this.byDate = DateTimeUtil.parseDate(this.byRaw);
             this.byDateTime = null;
+            if (this.byDate == null) {
+                throw new BestieException(
+                        "that doesn't look like a valid date bestie! try something like yyyy-MM-dd or dd/MM/yyyy.");
+            }
         }
     }
 

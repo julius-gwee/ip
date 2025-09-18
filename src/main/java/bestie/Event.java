@@ -24,7 +24,7 @@ public class Event extends Task {
      * @param from        textual representation of when the event starts
      * @param to          textual representation of when the event ends
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws BestieException{
         super(description, TaskType.EVENT);
         this.fromRaw = from.trim();
         this.toRaw = to.trim();
@@ -38,6 +38,10 @@ public class Event extends Task {
         } else {
             this.fromDate = DateTimeUtil.parseDate(this.fromRaw);
             this.fromDateTime = null;
+            if (this.fromDate == null) {
+                throw new BestieException(
+                        "the /from date doesn't look valid bestie! try something like yyyy-MM-dd or dd/MM/yyyy.");
+            }
         }
 
         if (tdt != null) {
@@ -46,6 +50,10 @@ public class Event extends Task {
         } else {
             this.toDate = DateTimeUtil.parseDate(this.toRaw);
             this.toDateTime = null;
+            if (this.toDate == null) {
+                throw new BestieException(
+                        "the /to date doesn't look valid bestie! try something like yyyy-MM-dd or dd/MM/yyyy.");
+            }
         }
     }
 
@@ -75,9 +83,9 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + fromNice + " to: " + toNice + ")";
     }
 
-/**
- * Serializes the event into the pipe-delimited storage representation.
- */
+    /**
+     * Serializes the event into the pipe-delimited storage representation.
+     */
     @Override
     public String toDataString() {
         String done = (status == Status.DONE) ? "1" : "0";

@@ -64,6 +64,7 @@ public class Deadline extends Task {
         } else {
             stored = byRaw; // keep old data as-is
         }
-        return type.getShortCode() + " | " + done + " | " + description + " | " + stored;
+        String base = type.getShortCode() + " | " + done + " | " + description + " | " + stored;
+        return appendTagsForStorage(base);
     }
 }

@@ -1,5 +1,9 @@
 package bestie;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  * Interprets user commands and applies the requested changes to the task list.
  */
@@ -67,6 +71,34 @@ public class Parser {
             Task removed = tasks.remove(delIndex);
             saveQuiet(storage, tasks);
             ui.showDelete(removed, tasks.size());
+            return false;
+        case "tag":
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                throw new BestieException("Tell me which task to tag and the tags to add bestie!");
+            }
+            String[] tagTokens = parts[1].trim().split("\\s+");
+            if (tagTokens.length < 2) {
+                throw new BestieException("Please include at least one tag after the task number!");
+            }
+            int tagIndex;
+            try {
+                tagIndex = Integer.parseInt(tagTokens[0]) - 1;
+            } catch (NumberFormatException nfe) {
+                throw new BestieException("The first argument should be the task number to tag!");
+            }
+            if (tagIndex < 0 || tagIndex >= tasks.size()) {
+                throw new BestieException("Please choose a valid task number to tag!");
+            }
+            Task taggedTask = tasks.get(tagIndex);
+            ArrayList<String> rawTags = new ArrayList<>();
+            for (int i = 1; i < tagTokens.length; i++) {
+                rawTags.add(tagTokens[i]);
+            }
+            List<String> addedTags = taggedTask.addTags(rawTags);
+            if (!addedTags.isEmpty()) {
+                saveQuiet(storage, tasks);
+            }
+            ui.showTag(taggedTask, addedTags);
             return false;
         case "todo":
             if (parts.length < 2 || parts[1].trim().isEmpty()) {

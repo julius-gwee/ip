@@ -99,6 +99,8 @@ public class Event extends Task {
             toStored = toRaw;
         }
 
-        return type.getShortCode() + " | " + done + " | " + description + " | " + fromStored + " | " + toStored;
+        String base = type.getShortCode() + " | " + done + " | " + description
+                + " | " + fromStored + " | " + toStored;
+        return appendTagsForStorage(base);
     }
 }
